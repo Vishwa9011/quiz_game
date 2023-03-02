@@ -1,0 +1,52 @@
+.options {
+     border: 2px solid white;
+     border-radius: 30px;
+     background-color: rgb(23, 23, 235);
+}
+
+.options:hover {
+     background: rgb(29, 29, 179);
+}
+
+.question {
+     border: 2px solid white;
+     background: rgb(124, 0, 224);
+     background: linear-gradient(0deg, rgba(124, 0, 224, 1) 0%, rgba(29, 67, 253, 1) 85%, rgba(216, 69, 252, 1) 100%);
+}
+
+.options.error {
+     --start: rgb(222, 16, 16);
+     --end: rgb(66, 11, 11);
+     background: rgb(222, 16, 16);
+     animation: blink 300ms ease-in-out infinite alternate-reverse;
+}
+
+.options.success {
+     --start: green;
+     --end: rgb(18, 66, 18);
+     background: green;
+     animation: blink 300ms ease-in-out infinite alternate-reverse;
+}
+
+:is(.options.success, .options.error):hover {
+     background: var(--start);
+}
+
+@keyframes blink {
+     0% {
+          background: var(--start);
+     }
+
+     100% {
+          background: var(--end);
+     }
+}
+
+
+
+.right {
+     padding: 20px;
+     align-self: stretch;
+     border-radius: 20px;
+     border: 2px solid white;
+}
