@@ -16,7 +16,7 @@ app.use(
     })
 )
 
-app.use("/add",QuizRouter)
+app.use("/quiz",QuizRouter)
 app.use("/user",UserRouter)
 
 //connect database
