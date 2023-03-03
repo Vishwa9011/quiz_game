@@ -9,8 +9,10 @@ import useTimer from './hooks/useTimer'
 function App() {
      const QueMainContainerRef = useRef<HTMLDivElement>(null);
      const QuestionRef = useRef<HTMLDivElement>(null);
+     const [qnum, setQnum] = useState<number>(0)
 
      function scrollLeft() {
+          setQnum(qnum + 1);
           QueMainContainerRef.current!.scrollLeft += QuestionRef.current!.clientWidth
      }
 
@@ -24,9 +26,6 @@ function App() {
                          <Flex overflow={'hidden'} ref={QueMainContainerRef}>
                               <Box minW='100%' ref={QuestionRef} p='2'>
                                    <Question qn={1} scrollLeft={scrollLeft} question={"Lorem ipsum dolor"} options={[1, 2, 3, 4]} answer="1" />
-                              </Box>
-                              <Box minW='100%' ref={QuestionRef}>
-                                   <Question qn={2} scrollLeft={scrollLeft} question={"Lorem ipsum dolor 2"} options={[1, 2, 3, 4]} answer="1" />
                               </Box>
                          </Flex>
                     </Box>

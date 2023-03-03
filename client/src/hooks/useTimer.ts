@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react'
 
-const initialTime = { min: 0, sec: 10 }
 
-function useTimer() {
-     const [time, setTime] = useState(initialTime);
+function useTimer(initialTimer = { min: 0, sec: 30 }) {
+     const [time, setTime] = useState(initialTimer);
 
      function timeOver() {
           resetTimer();
      }
 
      function resetTimer() {
-          setTime({ ...initialTime })
+          setTime({ ...initialTimer })
           clearInterval(id)
      }
 

@@ -12,15 +12,13 @@ type Props = {
      answer: string,
      scrollLeft(): void,
 }
+
 const list = ["A", "B", 'C', 'D']
 
 function Question({ qn, question, options, answer, scrollLeft }: Props) {
 
      const { setScoreBoard, scoreBoard } = useProvider()
      const [selectedValue, setSelectedValue] = useState<number | string>();
-
-     console.log('scoreBoard: ', qn, scoreBoard);
-     console.log('selectedValue: ', qn, selectedValue);
 
      function selectAnswer(value: string | number) {
           if (selectedValue) return;
@@ -54,10 +52,10 @@ function Question({ qn, question, options, answer, scrollLeft }: Props) {
 
      return (
           <Box>
-               <Timer />
+               <Timer initialTimer={{ min: 2, sec: 0 }} />
                <Flex h='' justify={'space-between'} gap='50px'>
                     <Box className='left' w='100%'>
-                         <Flex className='question' data-type={"hard"} data-qn={`${qn} / 10`} color={'whiteAlpha.800'} align={'center'} justify='center' textAlign={'center'} h='100px' fontSize={'1.3rem'} p='5' fontWeight={'semibold'}>
+                         <Flex className='question' data-type={"mid"} data-qn={`${qn} / 10`} color={'whiteAlpha.800'} align={'center'} justify='center' textAlign={'center'} h='100px' fontSize={'1.3rem'} p='5' fontWeight={'semibold'}>
                               {question}
                          </Flex>
                          {options && options.map((option, i) => (
@@ -72,10 +70,16 @@ function Question({ qn, question, options, answer, scrollLeft }: Props) {
                     </Flex>
                </Flex >
                <Flex mt='50px' gap='20px' justify={'flex-end'}>
-                    <Button isDisabled={selectedValue != null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Skip</Button>
-                    <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Next</Button>
+                    {qn !== 10 ?
+                         <>
+                              <Button isDisabled={selectedValue != null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Skip</Button>
+                              <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Next</Button>
+                         </>
+                         :
+                         <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Submit</Button>
+                    }
                </Flex>
-          </Box>
+          </Box >
      )
 }
 
