@@ -1,14 +1,5 @@
-#Home_first_pie {
-  margin-top: 5%;
-  width: 30%;
-  height: 60vh;
-  border: 1px solid black;
-  border-radius: 50%;
-}
-#Home_container h1 {
-  text-align: center;
-  text-decoration: underline;
-}
-#Home_container h1 {
-  font-size: x-large;
+.admin_heading {
+  background: linear-gradient(to right, #f00, #00f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

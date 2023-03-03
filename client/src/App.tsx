@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import Navbar from "./Admin/Components/Navbar/Navbar";
-import Home from "./Admin/Components/Home/Home";
-import Login from "./Admin/Components/Login/Login";
-import Register from "./Admin/Components/Register/Register";
+import Leaderboard from "./Components/Leaderboard/Leaderboard";
+import AdminDashboard from "./Admin/Components/Home/Home";
+import AdminLogin from "./Admin/Components/Login/Login";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Home />
+      <AdminLogin />
     </div>
   );
 }

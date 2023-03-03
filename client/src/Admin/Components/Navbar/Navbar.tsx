@@ -1,48 +1,50 @@
-import React, { useState } from "react";
-import { useDisclosure } from "@chakra-ui/react";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button,
-  Input,
-} from "@chakra-ui/react";
-import "./Navbar.css";
-import { Divide } from "hamburger-react";
-// import { useNavigate, Link } from "react-router-dom";
+import { Box, Flex, Stack, Text, Center } from "@chakra-ui/react";
+import { FaCog, FaHome, FaUsers } from "react-icons/fa";
 
-function Navbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const navItems = [
+  {
+    icon: FaHome,
+    label: "Dashboard",
+  },
+  {
+    icon: FaUsers,
+    label: "Users",
+  },
+  {
+    icon: FaCog,
+    label: "Settings",
+  },
+];
 
-  const btnRef = React.useRef();
-  const [admin, setAdmin] = useState({});
-  // const navigate = useNavigate();
-
+const SideNavbar = () => {
   return (
-    <>
-      <Button colorScheme="teal" onClick={onOpen}>
-        Admin Menu
-      </Button>
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Dashboard</DrawerHeader>
-          <DrawerBody>
-            <div id="admin_menu">
-              <h4>Home</h4>
-              <h4>Users</h4>
-              <h4>Add Question</h4>
-            </div>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </>
+    <Box
+      as="nav"
+      pos="fixed"
+      left={0}
+      top={0}
+      w="10%"
+      h="100vh"
+      bg="gray.800"
+      color="white"
+      overflow="hidden"
+    >
+      <Flex direction="column" h="full" align="center">
+        <Box p="4">
+          <Text fontSize="xl" fontWeight="bold">
+            Admin
+          </Text>
+        </Box>
+        <Stack spacing="10" p="3" mt="30%">
+          {navItems.map((item) => (
+            <Box key={item.label} color="white" as="a" href="#">
+              <item.icon size="50%" />
+            </Box>
+          ))}
+        </Stack>
+      </Flex>
+    </Box>
   );
-}
+};
 
-export default Navbar;
+export default SideNavbar;
