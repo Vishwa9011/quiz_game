@@ -12,7 +12,33 @@
      border: 2px solid white;
      background: rgb(124, 0, 224);
      background: linear-gradient(0deg, rgba(124, 0, 224, 1) 0%, rgba(29, 67, 253, 1) 85%, rgba(216, 69, 252, 1) 100%);
+     position: relative;
 }
+
+.question::before {
+     content: attr(data-type);
+     top: 0;
+     left: 10px;
+     color: gold;
+     font-size: .9rem;
+     padding: 2px 10px;
+     position: absolute;
+     background: #343434;
+     text-transform: capitalize;
+}
+
+.question::after {
+     content: attr(data-qn);
+     bottom: 0;
+     left: 10px;
+     color: white;
+     color: gold;
+     font-size: .8rem;
+     padding: 2px 10px;
+     position: absolute;
+     background: #343434;
+}
+
 
 .options.error {
      --start: rgb(222, 16, 16);
