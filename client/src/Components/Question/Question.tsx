@@ -62,9 +62,8 @@ function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }:
      }, [selectedValue])
 
      return (
-          <Box w='100%'>
-
-               <Flex justify={'space-between'} gap='50px'>
+          <Box w='100%' overflowY='auto'>
+               <Flex justify={'space-between'} gap='50px' flexDir={{ base: "column-reverse", sm: "column-reverse", lg: "row" }}>
                     <Box className='left' flex={1}>
                          <Flex className='question' data-type={"mid"} data-qn={`${qn} / 10`} color={'whiteAlpha.800'} align={'center'} justify='center' textAlign={'center'} h='100px' fontSize={'1.3rem'} p='5' fontWeight={'semibold'}>
                               {question}
@@ -76,7 +75,7 @@ function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }:
                               </Flex>
                          ))}
                     </Box>
-                    <Flex w='40%' className='right'>
+                    <Flex className='right' w={{ base: "100%", sm: "100%", lg: "40%" }}>
                          {
                               url
                                    ?

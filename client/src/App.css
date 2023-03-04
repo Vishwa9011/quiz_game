@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 html {
   scroll-behavior: smooth !important;
 }
@@ -16,7 +21,6 @@ body {
 li {
   list-style: none;
 }
-
 
 :is(input)::placeholder {
   color: whitesmoke;
