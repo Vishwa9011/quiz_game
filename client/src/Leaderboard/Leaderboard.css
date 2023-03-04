@@ -1,0 +1,16 @@
+.leaderboard {
+  margin: auto;
+  border: 2px solid white;
+  border-radius: 12px;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    65deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(71, 99, 99, 1) 65%,
+    rgba(0, 212, 255, 1) 93%
+  );
+}
