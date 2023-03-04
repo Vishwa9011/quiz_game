@@ -7,22 +7,23 @@ import "./Question.css";
 
 type Props = {
      qn: number,
+     url: string,
      question: string,
      options: number[] | string[],
      answer: string,
      scrollLeft(): void,
+     stopTimer(): void,
 }
 
 const list = ["A", "B", 'C', 'D']
 
-function Question({ qn, question, options, answer, scrollLeft }: Props) {
-
+function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }: Props) {
      const { setScoreBoard, scoreBoard } = useProvider()
      const [selectedValue, setSelectedValue] = useState<number | string>();
 
      function selectAnswer(value: string | number) {
+          stopTimer();
           if (selectedValue) return;
-
           setSelectedValue(value);
      }
 
@@ -45,16 +46,24 @@ function Question({ qn, question, options, answer, scrollLeft }: Props) {
           return answer !== selectedValue && selectedValue === option ? "error" : ""
      }
 
+     const scroll = () => {
+          scrollLeft()
+     }
+
+     const submitData = () => {
+          scrollLeft()
+     }
+
      useEffect(() => {
           if (!selectedValue) return
           updateScore()
      }, [selectedValue])
 
      return (
-          <Box>
-               <Timer initialTimer={{ min: 2, sec: 0 }} />
-               <Flex h='' justify={'space-between'} gap='50px'>
-                    <Box className='left' w='100%'>
+          <Box w='100%'>
+
+               <Flex justify={'space-between'} gap='50px'>
+                    <Box className='left' flex={1}>
                          <Flex className='question' data-type={"mid"} data-qn={`${qn} / 10`} color={'whiteAlpha.800'} align={'center'} justify='center' textAlign={'center'} h='100px' fontSize={'1.3rem'} p='5' fontWeight={'semibold'}>
                               {question}
                          </Flex>
@@ -65,18 +74,24 @@ function Question({ qn, question, options, answer, scrollLeft }: Props) {
                               </Flex>
                          ))}
                     </Box>
-                    <Flex w='40%' className='right' >
-                         <Image objectFit={'contain'} objectPosition='center' src='https://static.voicethread.com/wp-uploads/2018/08/Screen-Shot-2018-08-15-at-10.49.00-AM.png' />
+                    <Flex w='40%' className='right'>
+                         {
+                              url
+                                   ?
+                                   <Image objectFit={'contain'} objectPosition='center' src={url || 'https://static.voicethread.com/wp-uploads/2018/08/Screen-Shot-2018-08-15-at-10.49.00-AM.png'} />
+                                   :
+                                   <p>url is not working</p>
+                         }
                     </Flex>
                </Flex >
                <Flex mt='50px' gap='20px' justify={'flex-end'}>
                     {qn !== 10 ?
                          <>
-                              <Button isDisabled={selectedValue != null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Skip</Button>
-                              <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Next</Button>
+                              <Button isDisabled={selectedValue != null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scroll}>Skip</Button>
+                              <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scroll}>Next</Button>
                          </>
                          :
-                         <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scrollLeft}>Submit</Button>
+                         <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={submitData}>Submit</Button>
                     }
                </Flex>
           </Box >
