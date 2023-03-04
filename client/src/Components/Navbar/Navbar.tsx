@@ -1,12 +1,26 @@
 import { Box, Flex, Text } from '@chakra-ui/layout'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Avatar from '../Avatar/Avatar';
 import { GoSignOut } from "react-icons/go";
-import './Navbar.css'
 import { Image } from '@chakra-ui/react';
+import { useProvider } from '../../context/Provider';
+import './Navbar.css'
+import { useNavigate } from 'react-router';
 type Props = {}
 
 function Navbar({ }: Props) {
+
+     const { user, logout } = useProvider()
+     // const navigate = useNavigate();
+
+
+     // useEffect(() => {
+     //      if (!user?.name) {
+     //           return navigate("/register")
+     //      }
+     // }, [user?.name])
+
+
      return (
           <Flex px='2' h='60px' w='80%' m='auto' >
                <Flex align={'center'} justify='center' border={'px'} color='white'>
@@ -16,7 +30,7 @@ function Navbar({ }: Props) {
                     <Avatar src='' name="vishwa vivek " />
                     <Text fontSize={'1.3rem'} fontWeight='semibold'>Karan</Text>
                     <ul className='menu-list'>
-                         <li className='list-item'><GoSignOut />Sign Out</li>
+                         <li className='list-item' onClick={logout}><GoSignOut />Sign Out</li>
                     </ul>
                </Flex>
           </Flex>

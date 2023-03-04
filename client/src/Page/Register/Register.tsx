@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import axios from "axios";
 import {
   Flex,
@@ -10,46 +10,38 @@ import {
   InputLeftElement,
   chakra,
   Box,
-  Link,
-  Avatar,
   FormControl,
-  FormHelperText,
-  InputRightElement,
   RadioGroup,
   Radio,
   Image,
   Center,
+  Select,
 } from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import "./Register.css";
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
+import { useProvider } from "../../context/Provider";
+import { useNavigate } from "react-router";
 const Couter = chakra(AiOutlineUser);
+
 export const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [avatar, setAvatar] = useState("");
+  const navigate = useNavigate();
+  const { user, registerUser } = useProvider()
+  const [avtar, setavtar] = useState("");
   const [name, setName] = useState("");
   const [level, setLevel] = useState("Easy");
-  const handleShowClick = () => setShowPassword(!showPassword);
 
   const handleData = (e: FormEvent) => {
     e.preventDefault();
-    // console.log(avatar);
-    // console.log(name)
-    axios
-      .post("https://vast-plum-jaguar-shoe.cyclic.app/user/add", {
-        name: name,
-        avtar: avatar,
-        level: level,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (!avtar || !name) return alert("please Fill all fields");
+    registerUser({ name, avtar, level, })
   };
+
+  console.log('user: ', user);
+
+  useEffect(() => {
+    if (!user) return navigate("/register")
+  }, [user])
+
   return (
     <Flex
       className="back"
@@ -60,15 +52,12 @@ export const Register = () => {
       justifyContent="center"
       alignItems="center"
     >
-      {/* <Image src="http://clipart-library.com/img/1179379.gif"/> */}
       <Stack
         flexDir="column"
         mb="2"
         justifyContent="center"
         alignItems="center"
       >
-        {/* <Heading color="teal.400">Welcome</Heading> */}
-
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleData}>
             <Center>
@@ -106,7 +95,8 @@ export const Register = () => {
                     </InputGroup>
                   </Center>
                 </FormControl>
-                <select
+                <Select
+                  color={"whiteAlpha.900"}
                   name="Select the level"
                   id="Easy"
                   onChange={(e) => setLevel(e.target.value)}
@@ -114,7 +104,7 @@ export const Register = () => {
                   <option value="Easy">Easy</option>
                   <option value="hard">Hard</option>
                   <option value="Medium">Medium</option>
-                </select>
+                </Select>
                 <RadioGroup defaultValue="2">
                   <Heading
                     fontSize={"15px"}
@@ -122,13 +112,13 @@ export const Register = () => {
                     marginTop={"10px"}
                     marginBottom={"20px"}
                   >
-                    Select your avatar
+                    Select your avtar
                   </Heading>
                   <Stack spacing={5} direction="row">
                     <Radio
                       colorScheme="green"
                       value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTIQGklKp0DBSuhONZUGk8DWvs4VUZJ79FTn0dQxqCh-aCU_RTDwGCbWeAe0UnPjywfkY&usqp=CAU"
-                      onChange={(e) => setAvatar(e.target.value)}
+                      onChange={(e) => setavtar(e.target.value)}
                     >
                       <Image
                         w={"60px"}
@@ -140,7 +130,7 @@ export const Register = () => {
                     <Radio
                       colorScheme="green"
                       value="https://img.freepik.com/premium-vector/gamer-mascot-logo-gaming-badge_10051-451.jpg?w=2000"
-                      onChange={(e) => setAvatar(e.target.value)}
+                      onChange={(e) => setavtar(e.target.value)}
                     >
                       <Image
                         w={"65px"}
@@ -168,12 +158,6 @@ export const Register = () => {
           </form>
         </Box>
       </Stack>
-      {/* <Box>
-        New to us?{" "}
-        <Link color="teal.500" href="#">
-          Sign Up
-        </Link>
-      </Box> */}
     </Flex>
   );
 };

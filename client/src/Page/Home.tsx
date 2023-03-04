@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useProvider } from '../context/Provider'
 import Navbar from '../Components/Navbar/Navbar'
 import Question from '../Components/Question/Question'
+import { useNavigate } from 'react-router'
 
 // axios.defaults.baseURL = "http://localhost:5500"
 axios.defaults.baseURL = "https://vast-plum-jaguar-shoe.cyclic.app"
@@ -12,7 +13,8 @@ axios.defaults.baseURL = "https://vast-plum-jaguar-shoe.cyclic.app"
 
 const initialTimer = { min: 0, sec: 30 }
 function Home() {
-     const { fetchQuestion, question } = useProvider()
+     const navigate = useNavigate();
+     const { fetchQuestion, question, logout } = useProvider()
      const QueMainContainerRef = useRef<HTMLDivElement>(null);
      const QuestionRef = useRef<HTMLDivElement>(null);
      const [time, setTime] = useState(initialTimer);
@@ -71,6 +73,13 @@ function Home() {
           }, 1000)
           return () => clearInterval(interval)
      }, [reset, pause])
+
+     const { user } = useProvider()
+     useEffect(() => {
+          if (!user?.name) return navigate("/register")
+     }, [user])
+
+
 
      return (
           <Box>

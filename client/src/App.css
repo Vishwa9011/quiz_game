@@ -16,3 +16,12 @@ body {
 li {
   list-style: none;
 }
+
+
+:is(input)::placeholder {
+  color: whitesmoke;
+}
+
+option {
+  color: black;
+}
