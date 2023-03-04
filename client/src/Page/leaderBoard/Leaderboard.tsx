@@ -19,56 +19,51 @@ const LeaderBoard: React.FC = () => {
         setScores(response.data);
       });
   }, []);
-  console.log(scores);
+  scores.sort((a, b) => b.score - a.score);
 
   return (
-    <>
+    <div id="leaderboard_container">
       <img
-        style={{ width: "100%", overflow: "hidden", objectFit: "cover" }}
-        src="https://img.freepik.com/premium-photo/white-question-mark-yellow-concrete-grunge-wall-3d-illustration_665346-2987.jpg"
+        style={{ width: "100%", overflow: "auto", objectFit: "cover" }}
+        src="https://t4.ftcdn.net/jpg/03/45/88/07/360_F_345880772_zIT2mkdCzTthplO7xqaGGrMspN0jw0ll.jpg"
         alt="error"
       />
-      <Box
-        className="leader_box"
-        w="50%"
-        m="auto"
-        position="absolute"
-        bottom="40%"
-        left="28%"
-        borderRadius="15px"
-        padding="2%"
-      >
+      <Box className="leader_box">
         <Center>
-          <h1 className="leaderboard" style={{ fontSize: "larger" }}>
-            Leaderboard
-          </h1>
+          <h1 className="leaderboard">Leaderboard</h1>
         </Center>
-        <Table variant="simple" colorScheme="purple">
+        <Table className="leader_scores" variant="simple" colorScheme="purple">
           <Thead>
             <Tr>
-              <Th color="black" fontSize="large">
+              <Th color="white" fontSize="large">
                 Rank
               </Th>
-              <Th color="black" fontSize="large">
+              <Th color="white" fontSize="large">
                 Name
               </Th>
-              <Th color="black" fontSize="large">
+              <Th color="white" fontSize="large">
                 Score
               </Th>
             </Tr>
           </Thead>
-          <Tbody className="leader_scores">
+          <Tbody>
             {scores.map((score, index) => (
               <Tr key={index}>
-                <Td fontSize="medium">{index + 1}</Td>
-                <Td fontSize="medium">{score.name}</Td>
-                <Td fontSize="medium">{score.score}</Td>
+                <Td fontSize="x-large" fontWeight="bold">
+                  {index + 1}
+                </Td>
+                <Td fontSize="x-large" fontWeight="bold">
+                  {score.name}
+                </Td>
+                <Td fontSize="x-large" fontWeight="bold">
+                  {score.score}
+                </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </Box>
-    </>
+    </div>
   );
 };
 export default LeaderBoard;
