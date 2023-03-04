@@ -1,13 +1,23 @@
-import { useState } from 'react'
-import './App.css'
+import React, { useEffect } from "react";
+import "./App.css"
+import { useProvider } from "./context/Provider";
+import { AllRoutes } from "./Page/AllRoutes";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+const App = () => {
 
-  return (
-    <div>
+     const navigate = useNavigate()
+     const { user } = useProvider()
+     console.log('user: ', user);
 
-    </div>
-  )
+     useEffect(() => {
+          if (!user) return navigate("/register")
+     }, [user])
+
+     return (
+          <div>
+               <AllRoutes />
+          </div>
+     )
 }
-
 export default App
