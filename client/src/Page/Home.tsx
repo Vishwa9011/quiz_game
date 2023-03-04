@@ -83,15 +83,15 @@ function Home() {
 
      return (
           <Box>
-               <Box bg={'purple'} borderBottom={'2px'} borderColor='white' color={'white'}>
+               <Box bg={'purple'} borderBottom={'2px'} borderColor='white' color={'white'} >
                     <Navbar />
                </Box>
-               <Box w='80%' h='100dvh' m='auto' display={'flex'} alignItems='center' justifyContent={'center'} >
+               <Box w='80%' minH='100dvh' m='auto' display={'flex'} alignItems='center' justifyContent={'center'} >
                     <Box w='100%'>
                          <Flex gap='20px'>
-                              <Text w='10rem' textAlign={'center'} my='2' color='gold' fontSize={'1.5rem'} border={'2px'} p='1' fontWeight={'semibold'} borderRadius={'10px'}>{timeString}</Text>
+                              <Text w='10rem' textAlign={'center'} my='2' color='gold' fontSize={'1.5rem'} border={'2px'} borderColor='white' p='1' fontWeight={'semibold'} borderRadius={'10px'}>{timeString}</Text>
                          </Flex>
-                         <Flex overflow={'hidden'} ref={QueMainContainerRef} w='100%'>
+                         <Flex overflow={'hidden'} ref={QueMainContainerRef} w='100%' >
                               {question && question?.length > 0 &&
                                    question.map((ques, i) => (
                                         <Box key={ques._id} minW='100%' ref={QuestionRef} p='2'>
