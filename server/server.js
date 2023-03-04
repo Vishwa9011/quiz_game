@@ -7,6 +7,7 @@ const connectDB =require("./Config/Db")
 const cors=require("cors");
 const { QuizRouter } = require("./Routes/Quiz.route");
 const { UserRouter } = require("./Routes/User.route");
+const { ScoreRouter } = require("./Routes/Score.model");
 
 const app=express()
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use(
 
 app.use("/quiz",QuizRouter)
 app.use("/user",UserRouter)
+app.use("/score",ScoreRouter)
 
 //connect database
 app.listen(process.env.PORT,async()=>{
