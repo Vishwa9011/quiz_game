@@ -8,6 +8,8 @@ interface contextInterface {
      fetchQuestion(level: string): void,
      registerUser(userData: any): void,
      scorePost(scoreData: any): void,
+     leaderBoard(): void,
+     leaderBoardData: any,
      logout(): void,
      question: any[]
      user: any
@@ -24,6 +26,7 @@ const CProvider = ({ children }: { children: ReactNode }) => {
      const navigate = useNavigate()
      const [question, setQuestion] = useState<any>();
      const [scoreBoard, setScoreBoard] = useState<typeof initialScoreBoard>(initialScoreBoard)
+     const [leaderBoardData, setLeaderBoardData] = useState<any>()
 
      const fetchQuestion = async (level = "Easy") => {
           const data = await axios.get(`/quiz?level=${level}`);
@@ -57,8 +60,17 @@ const CProvider = ({ children }: { children: ReactNode }) => {
           setUser({});
      }
 
+     const leaderBoard = async () => {
+          try {
+               const data = await axios.get("/score");
+               setLeaderBoardData(data);
+          } catch (error) {
+               console.log('error: ', error);
+          }
+     }
+
      return (
-          <ContextProviderG.Provider value={{ setScoreBoard, user, scorePost, logout, registerUser, scoreBoard, fetchQuestion, question }}>
+          <ContextProviderG.Provider value={{ setScoreBoard, leaderBoardData, user, scorePost, leaderBoard, logout, registerUser, scoreBoard, fetchQuestion, question }}>
                {children}
           </ContextProviderG.Provider>
      )
