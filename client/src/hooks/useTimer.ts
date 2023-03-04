@@ -3,8 +3,10 @@ import React, { useState, useEffect, useMemo } from 'react'
 
 function useTimer(initialTimer = { min: 0, sec: 30 }) {
      const [time, setTime] = useState(initialTimer);
+     const [isTimeOver, setIsTimeOver] = useState(false)
 
      function timeOver() {
+          setIsTimeOver(true)
           resetTimer();
      }
 
@@ -14,6 +16,7 @@ function useTimer(initialTimer = { min: 0, sec: 30 }) {
      }
 
      function startTimer(): number {
+          setIsTimeOver(false)
           return setInterval(() => {
                if (time.sec === 0) {
                     if (time.min > 0) {
@@ -37,8 +40,7 @@ function useTimer(initialTimer = { min: 0, sec: 30 }) {
      }, [time])
 
 
-     return [timeString, startTimer, resetTimer] as [string, () => number, () => void]
-
+     return [timeString, startTimer, resetTimer, isTimeOver] as [string, () => number, () => void, boolean]
 }
 
 export default useTimer

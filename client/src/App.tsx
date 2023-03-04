@@ -1,20 +1,73 @@
 import { Button } from '@chakra-ui/button'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { useRef, useState, useEffect, useMemo } from 'react'
-import './App.css'
 import Navbar from './Components/Navbar/Navbar'
 import Question from './Components/Question/Question'
+import './App.css'
+import axios from 'axios'
+import { useProvider } from './context/Provider'
 import useTimer from './hooks/useTimer'
 
+// axios.defaults.baseURL = "http://localhost:5500"
+axios.defaults.baseURL = "https://vast-plum-jaguar-shoe.cyclic.app"
+
+
 function App() {
+     const { fetchQuestion, question } = useProvider()
      const QueMainContainerRef = useRef<HTMLDivElement>(null);
      const QuestionRef = useRef<HTMLDivElement>(null);
-     const [qnum, setQnum] = useState<number>(0)
+     const [time, setTime] = useState({ min: 0, sec: 10 });
+     const [reset, setReset] = useState(false);
+     const [pause, setPause] = useState(false);
+
+     const timeString = useMemo(() => {
+          return `${time.min < 10 ? "0" + time.min : time.min} : ${time.sec < 10 ? "0" + time.sec : time.sec} `
+     }, [time])
 
      function scrollLeft() {
-          setQnum(qnum + 1);
+          setPause(false)
+          resetTimer();
           QueMainContainerRef.current!.scrollLeft += QuestionRef.current!.clientWidth
      }
+
+     function timeOver() {
+          clearInterval(interval);
+          scrollLeft();
+     }
+
+     const resetTimer = () => {
+          clearInterval(interval);
+          setTime({ min: 0, sec: 10 });
+          setReset(v => !v);
+     }
+
+     const stopTimer = () => {
+          setPause(true)
+     }
+
+     var interval: number;
+     useEffect(() => {
+          console.log("reset", reset)
+          interval = setInterval(() => {
+
+               console.log('pause: ', pause);
+               if (pause) return clearInterval(interval);
+
+               if (time.sec === 0) {
+                    if (time.min > 0) {
+                         time.min--;
+                         time.sec = 60
+                    }
+               }
+
+               if (time.sec == 0 && time.min == 0) return timeOver();
+
+               time.sec--;
+               setTime({ min: time.min, sec: time.sec })
+
+          }, 1000)
+          return () => clearInterval(interval)
+     }, [reset, pause])
 
      return (
           <Box>
@@ -22,14 +75,22 @@ function App() {
                     <Navbar />
                </Box>
                <Box w='80%' h='100dvh' m='auto' display={'flex'} alignItems='center' justifyContent={'center'} >
-                    <Box>
-                         <Flex overflow={'hidden'} ref={QueMainContainerRef}>
-                              <Box minW='100%' ref={QuestionRef} p='2'>
-                                   <Question qn={1} scrollLeft={scrollLeft} question={"Lorem ipsum dolor"} options={[1, 2, 3, 4]} answer="1" />
-                              </Box>
+                    <Box w='100%'>
+                         <Flex gap='20px'>
+                              <Text w='10rem' textAlign={'center'} my='2' color='gold' fontSize={'1.5rem'} border={'2px'} p='1' fontWeight={'semibold'} borderRadius={'10px'}>{timeString}</Text>
                          </Flex>
+                         <Flex overflow={'hidden'} ref={QueMainContainerRef} w='100%'>
+                              {question && question?.length > 0 &&
+                                   question.map((ques, i) => (
+                                        <Box key={ques._id} minW='100%' ref={QuestionRef} p='2'>
+                                             <Question qn={i + 1} stopTimer={stopTimer} url={ques.url} scrollLeft={scrollLeft} question={ques.question} options={ques.option} answer={ques.correct} />
+                                        </Box>
+                                   ))
+                              }
+                         </Flex>
+                         <Button onClick={stopTimer}>reset</Button>
                     </Box>
-               </Box>
+               </Box >
           </Box >
      )
 }

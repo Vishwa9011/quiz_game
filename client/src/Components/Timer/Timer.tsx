@@ -7,13 +7,6 @@ type Props = {
 }
 
 function Timer({ initialTimer }: Props) {
-     const [timeString, startTimer, resetTimer] = useTimer(initialTimer);
-
-     var interval: number;
-     useEffect(() => {
-          interval = startTimer();
-          return () => clearInterval(interval)
-     }, [])
 
      return (
           <Flex gap='20px'>
