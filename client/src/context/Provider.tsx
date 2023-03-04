@@ -17,6 +17,7 @@ export const initialScoreBoard = { correct: 0, wrong: 0, score: 0 }
 
 const CProvider = ({ children }: { children: ReactNode }) => {
      const [question, setQuestion] = useState<any>();
+     const [user, setUser] = useState<any>();
      console.log('question: ', question);
      const [scoreBoard, setScoreBoard] = useState<typeof initialScoreBoard>(initialScoreBoard)
 
@@ -28,6 +29,7 @@ const CProvider = ({ children }: { children: ReactNode }) => {
 
      const registerUser = async (userData: any) => {
           const user: any = await axios.post("/user", userData);
+          
           fetchQuestion(user?.level);
      }
 
