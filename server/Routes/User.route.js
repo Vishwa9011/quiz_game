@@ -25,7 +25,7 @@ UserRouter.post("/add", async (req, res) => {
     try {
         let data = new userModel(userData)
         await data.save()
-        res.send(data)
+        res.send(data);
     }
     catch (err) {
         console.log(err)

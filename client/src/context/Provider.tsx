@@ -7,6 +7,7 @@ interface contextInterface {
      setScoreBoard: Dispatch<any>,
      fetchQuestion(level: string): void,
      registerUser(userData: any): void,
+     scorePost(scoreData: any): void,
      logout(): void,
      question: any[]
      user: any
@@ -43,13 +44,21 @@ const CProvider = ({ children }: { children: ReactNode }) => {
           }
      }
 
+     const scorePost = async (scoreData: any) => {
+          try {
+               await axios.post("/score/add", scoreData);
+               navigate(("/leaderboard"))
+          } catch (error: any) {
+               console.log('error: ', error.message);
+          }
+     }
+
      const logout = () => {
           setUser({});
      }
 
-
      return (
-          <ContextProviderG.Provider value={{ setScoreBoard, user, logout, registerUser, scoreBoard, fetchQuestion, question }}>
+          <ContextProviderG.Provider value={{ setScoreBoard, user, scorePost, logout, registerUser, scoreBoard, fetchQuestion, question }}>
                {children}
           </ContextProviderG.Provider>
      )

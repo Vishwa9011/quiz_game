@@ -11,15 +11,6 @@ type Props = {}
 function Navbar({ }: Props) {
 
      const { user, logout } = useProvider()
-     // const navigate = useNavigate();
-
-
-     // useEffect(() => {
-     //      if (!user?.name) {
-     //           return navigate("/register")
-     //      }
-     // }, [user?.name])
-
 
      return (
           <Flex px='2' h='60px' w='80%' m='auto' >
@@ -27,8 +18,8 @@ function Navbar({ }: Props) {
                     <Image boxSize={'70px'} src="/logo.png" />
                </Flex>
                <Flex align={'center'} gap='10px' ml='auto' className='profile' cursor={'pointer'}>
-                    <Avatar src='' name="vishwa vivek " />
-                    <Text fontSize={'1.3rem'} fontWeight='semibold'>Karan</Text>
+                    <Avatar src={user?.avtar} name={user?.name || "Quiz"} />
+                    <Text fontSize={'1.3rem'} fontWeight='semibold'>{user?.name}</Text>
                     <ul className='menu-list'>
                          <li className='list-item' onClick={logout}><GoSignOut />Sign Out</li>
                     </ul>

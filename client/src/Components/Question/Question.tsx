@@ -18,7 +18,8 @@ type Props = {
 const list = ["A", "B", 'C', 'D']
 
 function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }: Props) {
-     const { setScoreBoard, scoreBoard } = useProvider()
+
+     const { setScoreBoard, scoreBoard, scorePost, user } = useProvider()
      const [selectedValue, setSelectedValue] = useState<number | string>();
 
      function selectAnswer(value: string | number) {
@@ -51,7 +52,8 @@ function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }:
      }
 
      const submitData = () => {
-          scrollLeft()
+          const data = { ...user, ...scoreBoard }
+          scorePost(data);
      }
 
      useEffect(() => {
@@ -91,7 +93,7 @@ function Question({ qn, question, url, options, answer, scrollLeft, stopTimer }:
                               <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={scroll}>Next</Button>
                          </>
                          :
-                         <Button isDisabled={selectedValue == null} variant={'outline'} border='2px solid white' color={'gold'} onClick={submitData}>Submit</Button>
+                         <Button variant={'outline'} border='2px solid white' color={'gold'} onClick={submitData}>Submit</Button>
                     }
                </Flex>
           </Box >
