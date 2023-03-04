@@ -25,7 +25,7 @@ const Couter = chakra(AiOutlineUser);
 
 export const Register = () => {
   const navigate = useNavigate();
-  const { user, registerUser } = useProvider()
+  const { user, registerUser } = useProvider();
   const [avtar, setavtar] = useState("");
   const [name, setName] = useState("");
   const [level, setLevel] = useState("Easy");
@@ -33,14 +33,14 @@ export const Register = () => {
   const handleData = (e: FormEvent) => {
     e.preventDefault();
     if (!avtar || !name) return alert("please Fill all fields");
-    registerUser({ name, avtar, level, })
+    registerUser({ name, avtar, level });
   };
 
-  console.log('user: ', user);
+  console.log("user: ", user);
 
   useEffect(() => {
-    if (!user) return navigate("/register")
-  }, [user])
+    if (!user) return navigate("/register");
+  }, [user]);
 
   return (
     <Flex
@@ -66,8 +66,8 @@ export const Register = () => {
                 borderRadius={"50px"}
                 spacing={4}
                 p="1rem"
-                h="55vh"
-                w="25vw"
+                h={{ base: "60vh", md: "60vh", lg: "60vh", sm: "60vh" }}
+                w={{ base: "75vw", md: "45vw", lg: "25vw", sm: "75vw" }}
                 boxShadow="md"
               >
                 <Center>
@@ -148,7 +148,8 @@ export const Register = () => {
                     variant="solid"
                     _hover={{ bg: " rgba(0, 212, 255, 1) 100%" }}
                     colorScheme="teal"
-                    width="20vw"
+                   
+                    w={{ base: "75vw", md: "30vw", lg: "20vw", sm: "75vw" }}
                   >
                     Play Game
                   </Button>
