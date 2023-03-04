@@ -12,32 +12,37 @@ import useTimer from './hooks/useTimer'
 axios.defaults.baseURL = "https://vast-plum-jaguar-shoe.cyclic.app"
 
 
+const initialTimer = { min: 0, sec: 30 }
 function App() {
      const { fetchQuestion, question } = useProvider()
      const QueMainContainerRef = useRef<HTMLDivElement>(null);
      const QuestionRef = useRef<HTMLDivElement>(null);
-     const [time, setTime] = useState({ min: 0, sec: 10 });
+     const [time, setTime] = useState(initialTimer);
      const [reset, setReset] = useState(false);
      const [pause, setPause] = useState(false);
+     const [qnum, setQnum] = useState(1);
 
      const timeString = useMemo(() => {
           return `${time.min < 10 ? "0" + time.min : time.min} : ${time.sec < 10 ? "0" + time.sec : time.sec} `
      }, [time])
 
      function scrollLeft() {
+          setQnum(qnum + 1);
           setPause(false)
           resetTimer();
           QueMainContainerRef.current!.scrollLeft += QuestionRef.current!.clientWidth
      }
 
      function timeOver() {
+          if (qnum >= 10) return stopTimer();
+          console.log('qnum: ', qnum);
           clearInterval(interval);
           scrollLeft();
      }
 
      const resetTimer = () => {
           clearInterval(interval);
-          setTime({ min: 0, sec: 10 });
+          setTime({ min: 0, sec: 30 });
           setReset(v => !v);
      }
 
@@ -88,7 +93,6 @@ function App() {
                                    ))
                               }
                          </Flex>
-                         <Button onClick={stopTimer}>reset</Button>
                     </Box>
                </Box >
           </Box >
