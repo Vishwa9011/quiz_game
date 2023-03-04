@@ -1,31 +1,74 @@
-import { Box, Center, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
-import { useProvider } from '../../context/Provider'
+import { Box, Center, Table, Tbody, Th, Thead, Tr, Td } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import "./LeaderBoard.css";
+import { useProvider } from "../../context/Provider";
+import axios from "axios";
 
-type Props = {}
+interface Score {
+  name: string;
+  score: number;
+}
 
-function LeaderBoard({ }: Props) {
+const LeaderBoard: React.FC = () => {
+  const [scores, setScores] = useState<Score[]>([]);
 
-  const { leaderBoard, leaderBoardData } = useProvider();
-
-  useEffect(() => { }, [])
+  useEffect(() => {
+    axios
+      .get("https://vast-plum-jaguar-shoe.cyclic.app/score")
+      .then((response) => {
+        setScores(response.data);
+      });
+  }, []);
+  console.log(scores);
 
   return (
     <>
       <img
         style={{ width: "100%", overflow: "hidden", objectFit: "cover" }}
-        src="https://t4.ftcdn.net/jpg/03/45/88/07/360_F_345880772_zIT2mkdCzTthplO7xqaGGrMspN0jw0ll.jpg"
+        src="https://img.freepik.com/premium-photo/white-question-mark-yellow-concrete-grunge-wall-3d-illustration_665346-2987.jpg"
         alt="error"
       />
-      <Box w="50%" m="auto" position="absolute" bottom="50%" left="28%" border="4px solid white" borderRadius="15px" padding="2%">
+      <Box
+        className="leader_box"
+        w="50%"
+        m="auto"
+        position="absolute"
+        bottom="40%"
+        left="28%"
+        borderRadius="15px"
+        padding="2%"
+      >
         <Center>
-          <h1 className="leaderboard" style={{ fontSize: "larger", color: "white" }}>
+          <h1 className="leaderboard" style={{ fontSize: "larger" }}>
             Leaderboard
           </h1>
         </Center>
+        <Table variant="simple" colorScheme="purple">
+          <Thead>
+            <Tr>
+              <Th color="black" fontSize="large">
+                Rank
+              </Th>
+              <Th color="black" fontSize="large">
+                Name
+              </Th>
+              <Th color="black" fontSize="large">
+                Score
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody className="leader_scores">
+            {scores.map((score, index) => (
+              <Tr key={index}>
+                <Td fontSize="medium">{index + 1}</Td>
+                <Td fontSize="medium">{score.name}</Td>
+                <Td fontSize="medium">{score.score}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
       </Box>
     </>
-  )
-
-}
+  );
+};
 export default LeaderBoard;
