@@ -69,7 +69,6 @@ const CProvider = ({ children }: { children: ReactNode }) => {
           }
      }
 
-
      return (
           <ContextProviderG.Provider value={{ setScoreBoard, leaderBoardData, user, scorePost, leaderBoard, logout, registerUser, scoreBoard, fetchQuestion, question }}>
                {children}

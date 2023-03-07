@@ -2,7 +2,6 @@ import { Box, Button, Flex, Image, List, Text } from '@chakra-ui/react'
 import React, { useState, Dispatch, SetStateAction, useEffect } from 'react'
 import { useProvider } from '../../context/Provider';
 import useTimer from '../../hooks/useTimer';
-import Timer from '../Timer/Timer';
 import "./Question.css";
 
 type Props = {
